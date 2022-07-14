@@ -4,6 +4,8 @@ import React from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 
 function App() {
@@ -28,10 +30,11 @@ function App() {
     });
   }
 
-  function handleCardClick(link) {
+  function handleCardClick(link, name) {
     setSelectedCard({
       isOpen: true,
-      link: link
+      link: link,
+      name: name,
     });
   }
 
@@ -45,7 +48,11 @@ function App() {
         isEditAvatarPopupOpen: false
       })
 
-      setSelectedCard(false);
+      setSelectedCard({
+        link: '',
+        name: '',
+        isOpen: false,
+      });
     }
   }
 
@@ -69,10 +76,97 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditProfile={handleEditProfileClick}
           onCardClick={handleCardClick}
-          isOpen={isOpen}
-          onClose={closeAllPopups}
           selectedCard={selectedCard}
       />
+      <PopupWithForm
+        title="Редактировать профиль"
+        type="profile"
+        buttonText="Сохранить"
+        isOpen={isOpen.isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <label className="form__field">
+          <input type="text"
+                 name="name"
+                 id="name-input"
+                 placeholder="Имя"
+                 required
+                 minLength="2"
+                 maxLength="40"
+                 className="form__text-input form__text-input_type_name"/>
+          <span className="name-input-error form__input-error">Проверка</span>
+        </label>
+        <label className="form__field form__field_last">
+          <input type="text"
+                 name="job"
+                 id="job-input"
+                 placeholder="О себе"
+                 required
+                 minLength="2"
+                 maxLength="200"
+                 className="form__text-input form__text-input_type_job"/>
+          <span className="job-input-error form__input-error">Проверка</span>
+        </label>
+      </PopupWithForm>
+
+      <PopupWithForm
+        title="Новое место"
+        type="card"
+        buttonText="Сохранить"
+        isOpen={isOpen.isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
+        <label className="form__field">
+          <input type="text"
+                 name="name"
+                 id="photo-name-input"
+                 placeholder="Название"
+                 required
+                 minLength="2"
+                 maxLength="30"
+                 className="form__text-input form__text-input_type_photo-name"/>
+          <span className="photo-name-input-error form__input-error">Проверка</span>
+        </label>
+        <label className="form__field form__field_last">
+          <input type="url"
+                 name="link"
+                 id="photo-link-input"
+                 placeholder="Ссылка на картинку"
+                 required
+                 className="form__text-input form__text-input_type_photo-link"/>
+          <span className="photo-link-input-error form__input-error">Проверка</span>
+        </label>
+      </PopupWithForm>
+
+
+      <PopupWithForm
+        title="Обновить аватар"
+        type="avatar"
+        buttonText="Сохранить"
+        isOpen={isOpen.isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
+        <label className="form__field form__field_last">
+          <input type="url"
+                 name="avatar-url"
+                 id="avatar-input"
+                 placeholder="Ссылка на картинку"
+                 required
+                 className="form__text-input form__text-input_type_photo-link"/>
+          <span className="avatar-input-error form__input-error">Проверка</span>
+        </label>
+      </PopupWithForm>
+
+
+      <PopupWithForm
+        title="Вы уверены?"
+        type="confirmation"
+        buttonText="Да"
+      >
+        <input type="hidden" name="item-id" value=""/>
+      </PopupWithForm>
+
+      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
       <Footer/>
     </div>
   );

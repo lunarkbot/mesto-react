@@ -1,15 +1,17 @@
 
 export default function Card(props) {
   function handleClick() {
-    props.onCardClick(props.card.link)
+    props.onCardClick(props.card.link, props.card.name)
   }
 
   return(
-    <li className="photo-grid__item" onClick={handleClick}>
+    <li className="photo-grid__item">
       <div className="photo-grid__photo-wrap">
         <img src={props.card.link}
              className="photo-grid__photo"
-             alt={props.card.name}/>
+             alt={props.card.name}
+             onClick={handleClick}
+        />
         <button type="button"
                 className="photo-grid__trash-button"></button>
       </div>

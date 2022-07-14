@@ -6,7 +6,7 @@ export default function ImagePopup(props) {
           <img src={props.card.link}
                alt={props.card.name}
                className="popup__photo"/>
-          <figcaption className="popup__caption"></figcaption>
+          <figcaption className="popup__caption">{props.card.name}</figcaption>
         </figure>
         <button className="popup__close-button" type="button" onClick={props.onClose}></button>
       </div>
