@@ -1,24 +1,23 @@
 import PopupWithForm from "./PopupWithForm";
-import React from "react";
+import {useRef, useEffect} from "react";
 
 export default function EditAvatarPopup(props) {
-  const [avatar, setAvatar] = React.useState('');
-  const inputRef = React.useRef();
-
-  function handleChange() {
-    setAvatar(inputRef.current.value);
-  }
+  const inputRef = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
 
     props.onUpdateAvatar(
-      avatar,
+      inputRef.current.value,
       e
     )
-
-    setAvatar('');
   }
+
+  useEffect(() => {
+    if (!props.isOpen) {
+      inputRef.current.value='';
+    }
+  }, [props.isOpen])
 
   return(
     <PopupWithForm
@@ -37,8 +36,6 @@ export default function EditAvatarPopup(props) {
                ref={inputRef}
                placeholder="Ссылка на картинку"
                required
-               value={avatar}
-               onChange={handleChange}
                className="form__text-input form__text-input_type_photo-link"/>
         <span className="avatar-input-error form__input-error">Проверка</span>
       </label>

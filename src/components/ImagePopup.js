@@ -2,7 +2,7 @@ export default function ImagePopup(props) {
   return(
     <div className={`
               popup image-popup 
-              ${props.card.isOpen ? 'popup_opened' : ''}
+              ${props.card.isOpen && 'popup_opened'}
               ${props.animationClass}
             `} onClick={props.onClose}>
       <div className="popup__container popup__container_type_open-photo">

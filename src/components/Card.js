@@ -1,8 +1,8 @@
-import React from "react";
+import {useContext} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 export default function Card(props) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   function handleClick() {
     props.onCardClick(props.card.link, props.card.name)
@@ -27,17 +27,17 @@ export default function Card(props) {
              alt={props.card.name}
              onClick={handleClick}
         />
-        {isOwn ?  <button
+        {isOwn && <button
                     type="button"
                     className="photo-grid__trash-button"
-                    onClick={handleDeleteClick}></button> : ''}
+                    onClick={handleDeleteClick}></button>}
       </div>
       <div className="photo-grid__caption">
         <h2 className="photo-grid__title">{props.card.name}</h2>
         <div className="likes-counter">
           <button
             className={
-            `likes-counter__button ${isLiked ? 'likes-counter__button_checked' : ''}`
+            `likes-counter__button ${isLiked && 'likes-counter__button_checked'}`
             }
             type="button"
             onClick={handleLikeClick}

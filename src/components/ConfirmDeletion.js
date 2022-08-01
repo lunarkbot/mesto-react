@@ -1,5 +1,4 @@
 import PopupWithForm from "./PopupWithForm";
-import React from "react";
 
 export default function ConfirmDeletion(props) {
   function handleSubmit(e) {

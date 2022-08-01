@@ -1,10 +1,8 @@
-
 import '../pages/index.css';
-import React from "react";
+import {useRef, useState, useEffect} from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from '../utils/api';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -14,28 +12,28 @@ import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletion from "./ConfirmDeletion";
 
 function App() {
-  const avatarRef = React.useRef();
+  const avatarRef = useRef();
 
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
 
-  const [cardToDelete, setCardToDelete] = React.useState(null);
+  const [cardToDelete, setCardToDelete] = useState(null);
 
-  const [animationClass, setAnimationClass] = React.useState('');
+  const [animationClass, setAnimationClass] = useState('');
 
-  const [isOpen, setIsOpen] = React.useState({
+  const [isOpen, setIsOpen] = useState({
     isEditProfilePopupOpen: false,
     isAddPlacePopupOpen: false,
     isEditAvatarPopupOpen: false,
     isConfirmationPopupOpen: false,
   })
 
-  const [currentUser, setCurrentUser] = React.useState({
+  const [currentUser, setCurrentUser] = useState({
     name: 'Жак-Ив Кусто',
     about: 'Исследователь океана',
     avatar: false,
   });
 
-  const [selectedCard, setSelectedCard] = React.useState({
+  const [selectedCard, setSelectedCard] = useState({
     isOpen: false,
     link: null
   });
@@ -99,6 +97,7 @@ function App() {
         })
         closeAllPopups(form)
       })
+      .catch(err => console.log(err))
   }
 
   function handleUpdateAvatar(avatar, form) {
@@ -107,6 +106,7 @@ function App() {
         avatarRef.current.src = res.avatar;
         closeAllPopups(form);
       })
+      .catch(err => console.log(err))
   }
 
   function handleCardLike(card) {
@@ -117,7 +117,8 @@ function App() {
         setCards((state) => state.map((c) => {
           return c._id === card._id ? newCard : c;
         }));
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   function handleConfirmation(card) {
@@ -137,6 +138,7 @@ function App() {
         setCardToDelete(null);
         closeAllPopups(form)
       })
+      .catch(err => console.log(err));
   }
 
   function handleAddPlace(card, form) {
@@ -144,25 +146,27 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups(form);
-      });
+      })
+      .catch(err => console.log(err));
   }
 
-
-  React.useEffect(() => {
+  useEffect(() => {
     api.getCards()
       .then(cards => setCards([...cards]))
+      .catch(err => console.log(err));
   },[])
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getUserData()
       .then(userInfo => {
         setCurrentUser({
           ...userInfo
         })
       })
+      .catch(err => console.log(err));
   },[]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAnimationClass(' popup_animated');
   }, [currentUser])
 
