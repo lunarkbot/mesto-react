@@ -10,6 +10,10 @@
 * Figma (макет можно посмотреть [здесь](https://www.figma.com/proto/FICtgZMj34H0CTRBtxqziw/JavaScript.-Sprint-4-(Copy)?node-id=28212%3A269))
 * GIT
 * ReactJS
+  * useEffect
+  * useState
+  * useRef
+  * React Context
 
 ### О проекте
 
